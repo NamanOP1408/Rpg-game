@@ -64,6 +64,19 @@ const locations = [
         buttonText: ['Go to Town Square', 'Go to Town Square', 'Go to Town Square'],
         buttonFunction: [goTown, goTown, goTown],
         text: 'The monster "screams and dies!" You won the fight. You find some Xp and Gold.'
+    },
+    {
+        name: 'Lose',
+        buttonText: ['Restart', 'Restart', 'Restart'],
+        buttonFunction: [restart, restart, restart],
+        text: 'You died. Game Over.💀☠️'
+    
+    },
+    {
+        name: 'Win Game',
+        buttonText: ['Restart', 'Restart', 'Restart'],
+        buttonFunction: [restart, restart, restart],
+        text: 'You killed the dragon and saved the world. You won the game!🏆'
     }
 ];
 
@@ -149,15 +162,24 @@ function goFight(){
 function attack(){
     text.innerText = 'The' + monsters[fighting].name + ' attacks you,';
     text.innerText += ' You attack the ' + monsters[fighting].name + ' with your ' + weapons[currentWeapon].name + '.';
-    health -= monsters[fighting].level;
+    health -= getMonsterAttackValue(monsters[fighting].level);
     monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
     healthText.textContent = health;
     monsterHealthText.textContent = monsterHealth; 
     if (monsterHealth <= 0){
-        win();
+        if(fighting === 0){
+            winGame();
+        } else{
+            win();
+        }
     } else if (health <= 0){
         lose();
     }
+
+}
+
+function getMonsterAttackValue(level){
+    return Math.floor(Math.random() * level) + 1;
 
 }
 
@@ -177,6 +199,11 @@ function win(){
 function lose(){
     text.textContent = 'You died';
     update(locations[5]);
+}
+
+function winGame(){
+    update(locations[6]);
+
 }
 
 function restart(){
