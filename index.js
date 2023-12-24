@@ -9,6 +9,21 @@ const text = document.querySelector('#text');
 let xp = 0;
 let health = 100;
 let gold = 50;
+let currentWeapon = 0;
+let fighting;
+let monsterHealth;
+
+let inventory = ['Wooden Sword'];
+
+const weapons = [
+    { name: 'Wooden Sword', power: 5 },
+    { name: 'Axe', power: 30 },
+    { name: 'Spear', power: 50 },
+    { name: 'Legendary sword', power: 100 }
+];
+
+
+
 
 const locations = [
     {
@@ -73,11 +88,19 @@ function buyHealth(){
 }
 
 function buyWeapon(){
-    if(gold >= 30){
-        gold -= 30;
-        update(locations[1]);
-    } else {
-        alert('Not enough gold');
+    if (currentWeapon < 3){
+        if(gold >= 30){
+            gold -= 30;
+            currentWeapon++;
+            goldText.textContent = gold;
+            inventory.push(weapons[currentWeapon].name);
+            text.textContent = 'You bought a ' + weapons[currentWeapon].name;
+        } else {
+            text.textContent = 'Not enough gold';
+        }
+    }
+    else {
+        text.textContent = 'You already have the best weapon';
     }
 }
 
