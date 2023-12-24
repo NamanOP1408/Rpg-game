@@ -26,9 +26,9 @@ const weapons = [
 ];
 
 const monsters = [
-    { name: 'Dragon', level: 20, health: 200 },
-    { name: 'Goblin', level: 10, health: 50 },
-    { name: 'Spider', level: 3, health: 30 }
+    { name: 'Dragon', level: 50, health: 300 },
+    { name: 'Goblin', level: 30, health: 50 },
+    { name: 'Spider', level: 10, health: 30 }
 ];
 
 
@@ -58,6 +58,12 @@ const locations = [
         buttonFunction: [attack, dodge, goTown],
         text: 'You are fighting a monster. What do you do?'
     
+    },
+    {
+        name: 'Win',
+        buttonText: ['Go to Town Square', 'Go to Town Square', 'Go to Town Square'],
+        buttonFunction: [goTown, goTown, goTown],
+        text: 'The monster "screams and dies!" You won the fight. You find some Xp and Gold.'
     }
 ];
 
@@ -67,6 +73,7 @@ button2.onclick = goCave;
 button3.onclick = fightDragon;
 
 function update(locations){
+    monsterStats.style.display = 'none';
     button1.textContent = locations.buttonText[0];
     button2.textContent = locations.buttonText[1];
     button3.textContent = locations.buttonText[2];
@@ -140,9 +147,48 @@ function goFight(){
 }
 
 function attack(){
+    text.innerText = 'The' + monsters[fighting].name + ' attacks you,';
+    text.innerText += ' You attack the ' + monsters[fighting].name + ' with your ' + weapons[currentWeapon].name + '.';
+    health -= monsters[fighting].level;
+    monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
+    healthText.textContent = health;
+    monsterHealthText.textContent = monsterHealth; 
+    if (monsterHealth <= 0){
+        win();
+    } else if (health <= 0){
+        lose();
+    }
 
 }
 
 function dodge(){
+    text.innerText = 'You dodge the ' + monsters[fighting].name  + "s attack.";
+}
 
+function win(){
+    text.textContent = 'You killed the ' + monsters[fighting].name + ' and gained ' + monsters[fighting].level + ' xp.';
+    xp += monsters[fighting].level;
+    xpText.textContent = xp;
+    gold += monsters[fighting].level * 2;
+    goldText.textContent = gold;
+    update(locations[4]);
+}
+
+function lose(){
+    text.textContent = 'You died';
+    update(locations[5]);
+}
+
+function restart(){
+    xp = 0;
+    health = 100;
+    gold = 50;
+    xpText.textContent = xp;
+    healthText.textContent = health;
+    goldText.textContent = gold;
+    currentWeapon = 0;
+    fighting;
+    monsterHealth;
+    inventory = ['Wooden Sword'];
+    goTown();
 }
