@@ -26,7 +26,7 @@ const weapons = [
 ];
 
 const monsters = [
-    { name: 'Dragon', level: 50, health: 300 },
+    { name: 'Dragon', level: 80, health: 300 },
     { name: 'Goblin', level: 30, health: 50 },
     { name: 'Spider', level: 10, health: 30 }
 ];
@@ -163,7 +163,11 @@ function attack(){
     text.innerText = 'The' + monsters[fighting].name + ' attacks you,';
     text.innerText += ' You attack the ' + monsters[fighting].name + ' with your ' + weapons[currentWeapon].name + '.';
     health -= getMonsterAttackValue(monsters[fighting].level);
-    monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
+    if (isMonsterHit()){
+        monsterHealth -= weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
+    } else {
+        text.innerText += ' You missed the ' + monsters[fighting].name + '.';
+    }
     healthText.textContent = health;
     monsterHealthText.textContent = monsterHealth; 
     if (monsterHealth <= 0){
@@ -176,11 +180,20 @@ function attack(){
         lose();
     }
 
+    if(Math.random() <= .1){
+        text.innerText += ' Your ' + weapons[currentWeapon].name + ' broke.';
+        
+    }
+
 }
 
 function getMonsterAttackValue(level){
     return Math.floor(Math.random() * level) + 1;
 
+}
+
+function isMonsterHit(){
+    return Math.random() > 0.5 || health < 50;
 }
 
 function dodge(){
