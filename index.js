@@ -5,6 +5,9 @@ const xpText = document.querySelector('#xpText');
 const healthText = document.querySelector('#healthText');
 const goldText = document.querySelector('#goldText');
 const text = document.querySelector('#text');
+const monsterStats = document.querySelector('#monsterStats');
+const monsterName = document.querySelector('#monsterName');
+const monsterHealthText = document.querySelector('#monsterHealthText');
 
 let xp = 0;
 let health = 100;
@@ -48,13 +51,20 @@ const locations = [
         buttonText: ['Fight Spider', 'Fight Goblin', 'Go to Town Square'],
         buttonFunction: [fightSpider, fightGoblin, goTown],
         text: 'You are in the cave, you see something moving in the shadows. What do you do?'
+    },
+    {
+        name: 'Fight',
+        buttonText: ['Attack', 'Dodge', 'Run'],
+        buttonFunction: [attack, dodge, goTown],
+        text: 'You are fighting a monster. What do you do?'
+    
     }
 ];
 
 
 button1.onclick = goStore;
 button2.onclick = goCave;
-button3.onclick = goFight;
+button3.onclick = fightDragon;
 
 function update(locations){
     button1.textContent = locations.buttonText[0];
@@ -76,10 +86,6 @@ function goStore(){
 function goCave(){        
     update(locations[2]);
 }   
-
-function goFight(){
-    console.log('fight');
-}
 
 function buyHealth(){
     if(gold >= 10){
@@ -111,9 +117,30 @@ function buyWeapon(){
 
 
 function fightSpider(){
-    console.log('fight spider');
+    fighting = 2;
+    goFight();
 }
 
 function fightGoblin(){
-    console.log('fight goblin');
+    fighting = 1;
+    goFight();  
+}
+
+function fightDragon(){
+    fighting = 0;
+    goFight();
+}
+
+function goFight(){
+    update(locations[3]);
+    monsterHealth = monsters[fighting].health;
+    monsterStats.style.display = 'block';
+}
+
+function attack(){
+
+}
+
+function dodge(){
+
 }
