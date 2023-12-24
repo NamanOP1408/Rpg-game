@@ -22,6 +22,11 @@ const weapons = [
     { name: 'Legendary sword', power: 100 }
 ];
 
+const monsters = [
+    { name: 'Dragon', level: 20, health: 200 },
+    { name: 'Goblin', level: 10, health: 50 },
+    { name: 'Spider', level: 3, health: 30 }
+];
 
 
 
@@ -88,7 +93,7 @@ function buyHealth(){
 }
 
 function buyWeapon(){
-    if (currentWeapon < 3){
+    if (currentWeapon < weapons.length - 1){
         if(gold >= 30){
             gold -= 30;
             currentWeapon++;
@@ -103,6 +108,7 @@ function buyWeapon(){
         text.textContent = 'You already have the best weapon';
     }
 }
+
 
 function fightSpider(){
     console.log('fight spider');
