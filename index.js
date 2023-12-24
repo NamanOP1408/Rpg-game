@@ -18,16 +18,16 @@ const locations = [
         text: 'You are in the town quare. Where do you want to go?' 
     },
     {
-        name: 'Cave',
-        buttonText: 'Go to Cave',
-        buttonFunction: goCave,
-        text: 'Welcome to the Cave!'
+        name: 'Store',
+        buttonText: ['buy health (10 gold)', 'buy weapon (30 gold)', 'Go to Town Square'],
+        buttonFunction: [buyHealth, buyWeapon, goTown],
+        text: 'You are in the town quare. Where do you want to go?'
     },
     {
-        name: 'Fight',
-        buttonText: 'Go to Fight',
-        buttonFunction: goFight,
-        text: 'Welcome to the Fight!'
+        name: 'Cave',
+        buttonText: ['Fight Spider', 'Fight Goblin', 'Go to Town Square'],
+        buttonFunction: [fightSpider, fightGoblin, goTown],
+        text: 'You are in the cave, you see something moving in the shadows. What do you do?'
     }
 ];
 
@@ -43,5 +43,48 @@ function update(locations){
     button1.onclick = locations.buttonFunction[0];
     button2.onclick = locations.buttonFunction[1];
     button3.onclick = locations.buttonFunction[2];
+    text.textContent = locations.text;
+}
 
+function goTown(){
+    update(locations[0]);
+}
+
+function goStore(){
+    update(locations[1]);
+}
+function goCave(){        
+    update(locations[2]);
+}   
+
+function goFight(){
+    console.log('fight');
+}
+
+function buyHealth(){
+    if(gold >= 10){
+        gold -= 10;
+        health += 10;
+        goldText.textContent = gold;
+        healthText.textContent = health;
+    } else {
+        text.textContent = 'Not enough gold';
+    }
+}
+
+function buyWeapon(){
+    if(gold >= 30){
+        gold -= 30;
+        update(locations[1]);
+    } else {
+        alert('Not enough gold');
+    }
+}
+
+function fightSpider(){
+    console.log('fight spider');
+}
+
+function fightGoblin(){
+    console.log('fight goblin');
 }
