@@ -77,6 +77,13 @@ const locations = [
         buttonText: ['Restart', 'Restart', 'Restart'],
         buttonFunction: [restart, restart, restart],
         text: 'You killed the dragon and saved the world. You won the game!🏆'
+    },
+    {
+        name: 'Easter Egg',
+        buttonText: ['Pick 2', 'Pick 8', 'Go to Town Square'],
+        buttonFunction: [pickTwo, pickEight, goTown],
+        text: 'You found the Easter Egg! Pick a number between 1 and 10.'
+    
     }
 ];
 
@@ -180,9 +187,9 @@ function attack(){
         lose();
     }
 
-    if(Math.random() <= .1){
-        text.innerText += ' Your ' + weapons[currentWeapon].name + ' broke.';
-        
+    if(Math.random() <= .1 && inventory.length !== 1){
+        text.innerText += ' Your ' + inventory.pop() + ' broke.';
+        currentWeapon--;
     }
 
 }
@@ -231,4 +238,20 @@ function restart(){
     monsterHealth;
     inventory = ['Wooden Sword'];
     goTown();
+}
+
+function easterEgg(){
+    update(locations[7]);
+}
+
+function pickTwo(){
+    pick(2);
+}
+
+function pickEight(){
+    pick(8);
+}
+
+function pick(guess){
+
 }
