@@ -62,7 +62,7 @@ const locations = [
     {
         name: 'Win',
         buttonText: ['Go to Town Square', 'Go to Town Square', 'Go to Town Square'],
-        buttonFunction: [goTown, goTown, goTown],
+        buttonFunction: [goTown, goTown, easterEgg],
         text: 'The monster "screams and dies!" You won the fight. You find some Xp and Gold.'
     },
     {
@@ -253,5 +253,25 @@ function pickEight(){
 }
 
 function pick(guess){
-
+    let number = [];
+    while(number.length < 10){
+        let random = Math.floor(Math.random() * 10) + 1;
+        number.push(random);
+    }
+    text.innerText = 'You picked ' + guess + '. Here are the numbers:\n';
+    for(let i = 0; i < 10; i++){
+        text.innerText += number[i] + '\n';
+    }
+    if(number.indexOf(guess) !== -1){
+        text.innerText += 'Right! You won 100 gold!';
+        gold += 100;
+        goldText.textContent = gold;
+    } else {
+        text.innerText += 'Wrong! You lost 50 health!';
+        health -= 50;
+        healthText.textContent = health;
+        if(health <= 0){
+            lose();
+        }
+    }
 }
